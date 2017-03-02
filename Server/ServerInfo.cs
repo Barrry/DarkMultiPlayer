@@ -54,6 +54,9 @@ namespace DarkMultiPlayerServer
         [DataMember]
         public string modControlSha;
 
+        [DataMember]
+        public string[] whitelist;
+
         public ServerInfo(SettingsStore settings)
         {
             server_name = settings.serverName;
@@ -70,6 +73,7 @@ namespace DarkMultiPlayerServer
             universeSize = Server.GetUniverseSize();
             lastPlayerActivity = Server.GetLastPlayerActivity();
             modControlSha = Server.GetModControlSHA();
+            whitelist = WhitelistSystem.fetch.GetWhiteList();
         }
 
         public string GetJSON()
