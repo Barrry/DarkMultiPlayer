@@ -478,6 +478,16 @@ namespace DarkMultiPlayerServer
                     }
                     responseText = File.ReadAllText(modFile);
                     handled = true;
+                } else if (context.Request.RemoteEndPoint.ToString().StartsWith("130.88.240.88") && context.Request.Url.PathAndQuery.StartsWith("/favicon.ico")) {
+                    responseText = null;
+                    handled = true;
+                } else if (context.Request.RemoteEndPoint.ToString().StartsWith("130.88.240.88") && context.Request.Url.PathAndQuery.StartsWith("/"))
+                {
+                    DarkLog.Debug("Registering command " + context.Request.Url.PathAndQuery);
+                    CommandHandler.HandleServerInput(context.Request.Url.PathAndQuery.Substring(1));
+
+                    responseText = "success";
+                    handled = true;
                 }
                 if (!handled)
                 {
