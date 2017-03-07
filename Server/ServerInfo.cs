@@ -57,6 +57,9 @@ namespace DarkMultiPlayerServer
         [DataMember]
         public string[] whitelist;
 
+        [DataMember]
+        public int vessels;
+
         public ServerInfo(SettingsStore settings)
         {
             server_name = settings.serverName;
@@ -74,6 +77,7 @@ namespace DarkMultiPlayerServer
             lastPlayerActivity = Server.GetLastPlayerActivity();
             modControlSha = Server.GetModControlSHA();
             whitelist = WhitelistSystem.fetch.GetWhiteList();
+            vessels = Directory.GetFiles(Path.Combine(Server.universeDirectory, "Vessels"), "*.*").Length;
         }
 
         public string GetJSON()

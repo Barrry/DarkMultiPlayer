@@ -382,7 +382,7 @@ namespace DarkMultiPlayerServer
             string OS = Environment.OSVersion.Platform.ToString();
             if (Settings.settingsStore.httpPort > 0)
             {
-                DarkLog.Normal("Starting HTTP server...");
+                DarkLog.Normal("Starting HTTP server on port " + Settings.settingsStore.httpPort);
                 httpListener = new HttpListener();
                 try
                 {
@@ -478,13 +478,17 @@ namespace DarkMultiPlayerServer
                     }
                     responseText = File.ReadAllText(modFile);
                     handled = true;
-                } else if (context.Request.RemoteEndPoint.ToString().StartsWith("130.88.240.88") && context.Request.Url.PathAndQuery.StartsWith("/favicon.ico")) {
-                    responseText = null;
+                }
+                //Just ignores the request for a favicon if a browser is used
+                else if (context.Request.Url.PathAndQuery.StartsWith("/favicon.ico")) {
+                    responseText = "";
                     handled = true;
-                } else if (context.Request.RemoteEndPoint.ToString().StartsWith("130.88.240.88") && context.Request.Url.PathAndQuery.StartsWith("/"))
+                }
+                //use context.Request.RemoteEndPoint.ToString().StartsWith("") &&  with the IP of the webserver
+                else if (context.Request.Url.PathAndQuery != "/")
                 {
-                    DarkLog.Debug("Registering command " + context.Request.Url.PathAndQuery);
-                    CommandHandler.HandleServerInput(context.Request.Url.PathAndQuery.Substring(1));
+                    DarkLog.Debug("Received command '" + Uri.UnescapeDataString(context.Request.Url.PathAndQuery) + "'.");
+                    CommandHandler.HandleServerInput(Uri.UnescapeDataString(context.Request.Url.PathAndQuery.Substring(1)));
 
                     responseText = "success";
                     handled = true;
