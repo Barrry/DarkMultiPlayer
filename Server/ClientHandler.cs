@@ -176,21 +176,17 @@ namespace DarkMultiPlayerServer
             return authenticatedCount;
         }
 
-        public static string GetActivePlayerNames()
+        public static List<string> GetActivePlayerNames()
         {
-            string playerString = "";
+            List<string> playerList = new List<string>();
             foreach (ClientObject client in clients)
             {
                 if (client.authenticated)
                 {
-                    if (playerString != "")
-                    {
-                        playerString += ", ";
-                    }
-                    playerString += client.playerName;
+                    playerList.Add(client.playerName);
                 }
             }
-            return playerString;
+            return playerList;
         }
 
 

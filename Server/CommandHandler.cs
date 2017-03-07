@@ -133,8 +133,16 @@ namespace DarkMultiPlayerServer
 
         private static void ListClients(string commandArgs)
         {
-            if (Server.players != "")
+            if (Server.players.Count != 0)
             {
+                string playerString = "";
+                foreach (string name in Server.players)
+                {
+                    playerString += name + ", ";
+                }
+
+                playerString = playerString.Remove(playerString.Length - 2);
+
                 DarkLog.Normal("Online players: " + Server.players);
             }
             else

@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using DarkMultiPlayerCommon;
 using SettingsParser;
+using System.Collections.Generic;
 
 namespace DarkMultiPlayerServer
 {
@@ -20,7 +21,7 @@ namespace DarkMultiPlayerServer
         public static HttpListener httpListener;
         private static long ctrlCTime;
         public static int playerCount = 0;
-        public static string players = "";
+        public static List<string> players = new List<string>();
         public static long lastPlayerActivity;
         public static object universeSizeLock = new object();
         public static string modFile;

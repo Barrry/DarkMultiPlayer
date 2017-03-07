@@ -22,7 +22,7 @@ namespace DarkMultiPlayerServer
         public int protocol_version;
 
         [DataMember]
-        public string players;
+        public string[] players;
 
         [DataMember]
         public int player_count;
@@ -63,7 +63,7 @@ namespace DarkMultiPlayerServer
             version = Common.PROGRAM_VERSION;
             protocol_version = Common.PROTOCOL_VERSION;
             player_count = Server.playerCount;
-            players = Server.players;
+            players = Server.players.ToArray();
             max_players = settings.maxPlayers;
             game_mode = settings.gameMode.ToString();
             warp_mode = settings.warpMode.ToString();
