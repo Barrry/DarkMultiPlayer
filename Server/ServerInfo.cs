@@ -60,6 +60,9 @@ namespace DarkMultiPlayerServer
         [DataMember]
         public int vessels;
 
+        [DataMember]
+        public double uptime;
+
         public ServerInfo(SettingsStore settings)
         {
             server_name = settings.serverName;
@@ -78,6 +81,7 @@ namespace DarkMultiPlayerServer
             modControlSha = Server.GetModControlSHA();
             whitelist = WhitelistSystem.fetch.GetWhiteList();
             vessels = Directory.GetFiles(Path.Combine(Server.universeDirectory, "Vessels"), "*.*").Length;
+            uptime = Server.serverClock.ElapsedMilliseconds;
         }
 
         public string GetJSON()
