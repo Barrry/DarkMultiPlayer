@@ -61,7 +61,7 @@ namespace DarkMultiPlayerServer
         public int vessels;
 
         [DataMember]
-        public double uptime;
+        public long uptime;
 
         public ServerInfo(SettingsStore settings)
         {
