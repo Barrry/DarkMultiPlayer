@@ -80,8 +80,8 @@ namespace DarkMultiPlayerServer
             lastPlayerActivity = Server.GetLastPlayerActivity();
             modControlSha = Server.GetModControlSHA();
             whitelist = WhitelistSystem.fetch.GetWhiteList();
-            vessels = Directory.GetFiles(Path.Combine(Server.universeDirectory, "Vessels"), "*.*").Length;
-            uptime = Server.serverClock.ElapsedMilliseconds;
+            vessels = Server.GetVesselCount();
+            uptime = Server.serverClock.ElapsedMilliseconds / 1000;
         }
 
         public string GetJSON()

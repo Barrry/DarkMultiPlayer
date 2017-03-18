@@ -251,6 +251,45 @@ namespace DarkMultiPlayerServer
                 return directorySize;
             }
         }
+        //Get vessel count minus asteroids
+        public static int GetVesselCount()
+        {
+            lock (universeSizeLock)
+            {
+                int vesselCount = 0;
+                string[] vessels = Directory.GetFiles(Path.Combine(Server.universeDirectory, "Vessels"), "*.*");
+
+                foreach (string vessel in vessels)
+                {
+                    using (StreamReader sr = new StreamReader(vessel))
+                    {
+                        try
+                        {
+                            for (var i = 0; i < 2; i++)
+                            {
+                                sr.ReadLine();
+                            }
+
+                            string currentLine = sr.ReadLine();
+                            string value = currentLine.Substring(currentLine.IndexOf("=") + 1).Trim();
+
+                            if (value != "SpaceObject")
+                            {
+                                vesselCount++;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            DarkLog.Error("Error reading  file, Exception " + e);
+                        }
+
+                    }
+                }
+
+                return vesselCount;
+            }
+            
+        }
         //Get last disconnect time
         public static long GetLastPlayerActivity()
         {
